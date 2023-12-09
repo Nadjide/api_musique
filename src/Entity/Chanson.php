@@ -2,10 +2,39 @@
 
 namespace App\Entity;
 
-use App\Repository\ChansonRepository;
+use App\Entity\Album;
+use App\Entity\Artiste;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\ChansonRepository;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: ChansonRepository::class)]
+
+#[ApiResource(
+    uriTemplate: 'artistes/{artiste_id}/albums/{album_id}/songs',
+    uriVariables: [
+        'artiste_id' => new Link(fromClass: Artiste::class, toProperty: 'albums'),
+        'album_id' => new Link(fromClass: Album::class),
+    ],
+    operations: [new GetCollection(), new Post()]
+)]
+#[ApiResource(
+    uriTemplate: 'artistes/{artiste_id}/albums/{album_id}/songs/{id}',
+    uriVariables: [
+        'artiste_id' => new Link(fromClass: Artiste::class, toProperty: 'albums'),
+        'album_id' => new Link(fromClass: Album::class),
+        'id' => new Link(fromClass: Chanson::class)
+    ],
+    operations: [new Get(), new Put(), new Delete(), new Patch()]
+)]
+
 class Chanson
 {
     #[ORM\Id]
