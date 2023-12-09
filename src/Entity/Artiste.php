@@ -2,14 +2,21 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArtisteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 
 #[ORM\Entity(repositoryClass: ArtisteRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['artiste_read']]
+)]
+#[ApiFilter(SearchFilter::class, properties: ['style' => 'partial'])]
 
 class Artiste
 {
@@ -25,6 +32,7 @@ class Artiste
     private ?string $style = null;
 
     #[ORM\OneToMany(mappedBy: 'artiste', targetEntity: Album::class)]
+    #[Groups(['artiste_read'])]
     private Collection $albums;
 
     public function __construct()

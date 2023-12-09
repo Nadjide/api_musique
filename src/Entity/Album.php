@@ -15,6 +15,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
 #[ApiResource(
@@ -51,6 +52,7 @@ class Album
     private ?Artiste $artiste = null;
 
     #[ORM\OneToMany(mappedBy: 'album', targetEntity: Chanson::class)]
+    #[Groups(['album_read'])]
     private Collection $songs;
 
     public function __construct()

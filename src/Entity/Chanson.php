@@ -4,16 +4,18 @@ namespace App\Entity;
 
 use App\Entity\Album;
 use App\Entity\Artiste;
-use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ChansonRepository;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 
 #[ORM\Entity(repositoryClass: ChansonRepository::class)]
 
@@ -35,6 +37,7 @@ use ApiPlatform\Metadata\GetCollection;
     operations: [new Get(), new Put(), new Delete(), new Patch()]
 )]
 
+#[ApiFilter(RangeFilter::class, properties: ['length'])]
 class Chanson
 {
     #[ORM\Id]
