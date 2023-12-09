@@ -19,6 +19,21 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+    'App\Doctrine\Filter\SearchFilter':
+        arguments: [ '@doctrine' ]
+        tags:
+            - { name: 'api_platform.filter', id: 'artist.style_search' }
+
+    # Configurez le filtre de plage pour les chansons
+    'App\Doctrine\Filter\RangeFilter':
+        arguments: [ '@doctrine' ]
+        tags:
+            - { name: 'api_platform.filter', id: 'song.length_range' }
+
+    App\State\UserPasswordHasher:
+        bind:
+            $processor: '@api_platform.doctrine.orm.state.persist_processor'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

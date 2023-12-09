@@ -17,6 +17,7 @@ use App\Repository\ChansonRepository;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 
+
 #[ORM\Entity(repositoryClass: ChansonRepository::class)]
 
 #[ApiResource(
