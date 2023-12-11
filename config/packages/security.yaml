@@ -28,5 +28,5 @@ security:
 
     access_control:
         - { path: ^/api/docs, roles: PUBLIC_ACCESS } # Permet un accès public à la documentation de l'API
-        - { path: ^/api, roles: PUBLIC_ACCESS } # Authentification requise pour toutes les routes /api
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/auth, roles: PUBLIC_ACCESS }
